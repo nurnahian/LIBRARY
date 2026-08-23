@@ -1,6 +1,4 @@
-import { Timestamp } from "mongodb";
 import mongoose from "mongoose";
-import { Stream } from "nodemailer/lib/xoauth2";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -27,7 +25,7 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   department: String,
-  Stream: String,
+  stream: String,
   semester: String,
   year: String,
   roolNo: String,
