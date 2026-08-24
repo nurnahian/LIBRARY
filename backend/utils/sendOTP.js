@@ -1,4 +1,6 @@
 import { createTransport } from "nodemailer";
+import "dotenv/config";
+
 const sendOtp = async (email, otp) => {
   const transporter = createTransport({
     service: "gmail",

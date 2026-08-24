@@ -7,12 +7,12 @@ import {
   registerUser,
   updateProfile,
   verifyOtp,
-} from "../controllers/authController";
+} from "../controllers/authController.js";
 
 import {
   authenticationToken,
   authorizeRoles,
-} from "../middleware/authMiddleware";
+} from "../middleware/authMiddleware.js";
 
 const authRouter = express.Router();
 
@@ -23,8 +23,8 @@ authRouter.post("/login", loginUser);
 authRouter.post("/register-admin", registerAdmin);
 
 // protected routes
-authRouter.post("/me", authenticationToken, getProfile);
+authRouter.get("/me", authenticationToken, getProfile);
 authRouter.post("/update-profile", authenticationToken, updateProfile);
-authRouter.post("/users", authenticationToken, authorizeRoles("admin"));
+authRouter.get("/users", authenticationToken, authorizeRoles("admin"));
 
 export default authRouter;

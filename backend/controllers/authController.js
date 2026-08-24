@@ -1,10 +1,9 @@
-import User from "../models/User";
+import User from "../models/User.js";
 import { generate } from "otp-generator";
-import sendOtp from "../utils/sendOTP";
+import sendOtp from "../utils/sendOTP.js";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import { useReducer } from "react";
 
 export async function registerUser(req, res) {
   try {
@@ -46,7 +45,7 @@ export async function registerUser(req, res) {
     }
 
     const hashedpassword = await bcrypt.hash(password, 10);
-    const otpExpiry = new Date(Date.new() + 5 * 60 * 1000);
+    const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
     const studentId = `ST-${uuidv4().slice(0, 8).toUpperCase()}`;
 
     const user = await User.create({
@@ -80,7 +79,7 @@ export async function verifyOtp(req, res) {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    if (user.otp !== otp || new Date() > new Date(user.otpExpiry)) {
+    if (user.otp != otp || new Date() > new Date(user.otpExpiry)) {
       return res.status(400).json({
         message: "Invalid or expired OTP",
       });
