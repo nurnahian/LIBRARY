@@ -211,3 +211,120 @@ export async function getProfile(req, res) {
   }
 }
 
+//updateProfile
+
+export async function updateProfile(req, res) {
+  try {
+    const {
+      name,
+      email,
+      phone,
+      department,
+      stream,
+      semester,
+      academicYear,
+      rollNumber,
+    } = req.body;
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    if (email) {
+      const normalizedEmail = email.trim().toLowerCase();
+      if (normalizedEmail !== user.email.toLowerCase()) {
+        if (user.role == "user") {
+          return res.status(400).json({
+            message: "Student are not allowed to change their email address",
+          });
+        }
+        if (
+          await User.findOne({ email: normalizedEmail, _id: { $ne: user._id } })
+        ) {
+          return res.status(400).json({ message: "Email already in use" });
+        }
+        user.email = normalizedEmail;
+      }
+    }
+    if (phone) {
+      const cleanPhone = phone.toString().replace(/\D/g, "");
+      if (cleanPhone.length !== 10) {
+        return res
+          .status(400)
+          .json({ message: "Mobile number must be exactly 11 digits" });
+      }
+      user.phone = cleanPhone;
+    }
+
+    if (name) user.name = name;
+    if (department) user.department = department;
+    if (stream) user.stream = stream;
+    if (semester) user.semester = semester;
+    if (academicYear) user.year = academicYear;
+    if (rollNumber) user.rollNo = rollNumber;
+
+    await user.save();
+    res
+      .status(200)
+      .json({ success: true, message: "Profile updated successfully", user });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res
+      .status(500)
+      .json({ message: "Error updating profile", error: error.message });
+  }
+}
+
+//get user
+
+export async function getUsers(req, res) {
+  try {
+    const users = await User.find({
+      role: "user",
+      isVarified: true,
+      isProfileComplete: true,
+    }).select("-password");
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    res
+      .status(500)
+      .json({ message: "Error fetching students", error: error.message });
+  }
+}
+
+// admin registration
+
+export async function registerAdmin(req, res) {
+  try {
+    const { name, email, phone, password } = req.body;
+    if (!name || !email || !phone || !password) {
+      return res.status(400).json({
+        message: "Please enter all required fields",
+      });
+    }
+
+    if (await User.findOne({ email })) {
+      return res.status(400).json({
+        message: "User already exists with this email",
+      });
+    }
+    const hashedpassword = await bcrypt.hash(password, 10);
+    const user = await User.create({
+      name,
+      email: email,
+      password: hashedpassword,
+      role: "admin",
+      isVarified: true,
+    });
+    const { password: _, ...userResponse } = user.toObject();
+
+    res.status(201).json({
+      success: true,
+      message: "Admin registered successfully!",
+      user: userResponse,
+    });
+  } catch (error) {
+    console.error("Error registering admin:", error);
+    res
+      .status(500)
+      .json({ message: "Error Error registering admin", error: error.message });
+  }
+}
