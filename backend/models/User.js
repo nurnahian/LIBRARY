@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     stream: String,
     semester: String,
     year: String,
-    roolNo: String,
+    rollNo: String,
     isProfileComplete: {
       type: Boolean,
       default: false,
