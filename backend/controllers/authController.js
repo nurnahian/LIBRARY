@@ -70,7 +70,6 @@ export async function registerUser(req, res) {
 }
 
 // step 2: otp verify
-
 export async function verifyOtp(req, res) {
   try {
     const { email, otp } = req.body;
@@ -97,7 +96,6 @@ export async function verifyOtp(req, res) {
 }
 
 // step 3: complete profile
-
 export async function completeProfile(req, res) {
   try {
     const { email, department, stream, semester, year, rollNo } = req.body;
@@ -137,7 +135,6 @@ export async function completeProfile(req, res) {
 }
 
 // user login
-
 export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
@@ -191,7 +188,6 @@ export async function loginUser(req, res) {
 }
 
 // get current user profile
-
 export async function getProfile(req, res) {
   try {
     const user = await User.findById(req.user.id).select("password");
@@ -211,7 +207,6 @@ export async function getProfile(req, res) {
 }
 
 //updateProfile
-
 export async function updateProfile(req, res) {
   try {
     const {
@@ -272,7 +267,6 @@ export async function updateProfile(req, res) {
 }
 
 //get user
-
 export async function getUsers(req, res) {
   try {
     const users = await User.find({
@@ -290,7 +284,6 @@ export async function getUsers(req, res) {
 }
 
 // admin registration
-
 export async function registerAdmin(req, res) {
   try {
     const { name, email, phone, password } = req.body;
