@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const Sidebar = () => {
-  return (
-    <div>Sidebar</div>
-  )
-}
+const Sidebar = ({
+  title,
+  subtitle,
+  badge,
+  navItems,
+  footerItems = [],
+  accent = "user",
+  logoSrc
+}) => {
+  return <div></div>;
+};
 
-export default Sidebar
+export default Sidebar;
