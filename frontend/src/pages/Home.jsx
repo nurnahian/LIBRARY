@@ -61,7 +61,7 @@ const Home = () => {
   return (
     <div>
       <Sidebar
-        title="ShelWise"
+        title="BOOK LIBRARY"
         subtitle="Library management portal"
         badge="Beautiful theme"
         navItems={navItems}
