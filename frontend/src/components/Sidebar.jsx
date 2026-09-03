@@ -24,7 +24,7 @@ const Sidebar = ({
   title,
   subtitle,
   badge,
-  navItems,
+  navItems = [],
   footerItems = [],
   accent = "user",
   logoSrc,
@@ -80,13 +80,35 @@ const Sidebar = ({
             const active =
               location.pathname === item.href ||
               (item.match ? location.pathname.startsWith(item.match) : false);
-            return <Link key={item.label} to={item.href} onClick={()=>setOpen(false)} className={`${s.navLink} ${active?s.navLinkActive:s.navLinkInactive}`}>
-              <span>
-                
-              </span>
-            </Link>;
+            return (
+              <Link
+                key={item.label}
+                to={item.href}
+                onClick={() => setOpen(false)}
+                className={`${s.navLink} ${active ? s.navLinkActive : s.navLinkInactive}`}
+              >
+                <span
+                  className={`${s.navIconWrapper} ${active ? s.navIconWrapperActive : s.navIconWrapperInactive}`}
+                >
+                  <Icon size={18} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className={s.navLabel}>{item.label}</span>
+                  <span
+                    className={`${s.navDescription}${active ? s.navDescriptionActive : s.navDescriptionInactive}`}
+                  >
+                    {item.description}
+                  </span>
+                </span>
+                <ChevronRight
+                  size={16}
+                  className={active ? s.navChevronActive : s.navChevronInactive}
+                />
+              </Link>
+            );
           })}
         </nav>
+        <div className={s.footer}></div>
       </aside>
     </>
   );

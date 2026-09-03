@@ -1,10 +1,11 @@
-import Sidebar from "./components/Sidebar";
+import { Route, Routes } from "react-router";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <>
-      <Sidebar />
-    </>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
 

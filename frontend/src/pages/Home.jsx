@@ -1,3 +1,4 @@
+import { BookMarked, ShieldCheck, Users } from "lucide-react";
 import Sidebar from "../components/Sidebar";
 
 const navItems = [
@@ -34,37 +35,37 @@ const features = [
     text: "Library staff can manage student records, manual book issues, overdue items, and fine settings from the admin area.",
   },
 ];
+// const footerItems = currentUser
+//   ? [
+//       {
+//         label: "Logout",
+//         icon: "login",
+//         kind: "primary",
+//         action: () => {
+//           logout();
+//           navigate("/");
+//         },
+//       },
+//     ]
+//   : [
+//       { label: "Login", href: "/login", icon: "login", kind: "primary" },
+//       {
+//         label: "Sign Up",
+//         href: "/signup",
+//         icon: "signup",
+//         kind: "secondary",
+//       },
+//     ];
 
 const Home = () => {
-  const footerItems = currentUser
-    ? [
-        {
-          label: "Logout",
-          icon: "login",
-          kind: "primary",
-          action: () => {
-            logout();
-            navigate("/");
-          },
-        },
-      ]
-    : [
-        { label: "Login", href: "/login", icon: "login", kind: "primary" },
-        {
-          label: "Sign Up",
-          href: "/signup",
-          icon: "signup",
-          kind: "secondary",
-        },
-      ];
   return (
     <div>
       <Sidebar
         title="ShelWise"
-        suntitle="Library management portal"
+        subtitle="Library management portal"
         badge="Beautiful theme"
         navItems={navItems}
-        footerItems={footerItems}
+        // footerItems={footerItems}
       />
     </div>
   );
